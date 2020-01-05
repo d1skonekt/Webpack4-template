@@ -1,7 +1,7 @@
 {
-  "name": "portfolio",
+  "name": "webpack",
   "version": "1.0.0",
-  "description": "My portfolio",
+  "description": "Webpack template",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --config ./wpConfigs/webpack.dev.conf.js",
