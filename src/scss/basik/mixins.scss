@@ -5,37 +5,41 @@
 }
 
 @mixin fontsTypography($fontName, $fontWeight, $fontStyle: normal) {
-  $fontWeightArr: (Thin: 100,
-      ThinItalic: 100,
-      ExtraLight: 200,
-      ExtraLightItalic: 200,
-      Light: 300,
-      LightItalic: 300,
-      Regular: 400,
-      Italic: 400,
-      Medium: 500,
-      MediumItalic: 500,
-      SemiBold: 600,
-      SemiBoldItalic: 600,
-      Bold: 700,
-      BoldItalic: 700,
-      ExtraBold: 800,
-      ExtraBoldItalic: 800,
-      Black: 900,
-      BlackItalic: 900);
+  $fontWeightArr: (
+    Thin: 100,
+    ThinItalic: 100,
+    ExtraLight: 200,
+    ExtraLightItalic: 200,
+    Light: 300,
+    LightItalic: 300,
+    Regular: 400,
+    Italic: 400,
+    Medium: 500,
+    MediumItalic: 500,
+    SemiBold: 600,
+    SemiBoldItalic: 600,
+    Bold: 700,
+    BoldItalic: 700,
+    ExtraBold: 800,
+    ExtraBoldItalic: 800,
+    Black: 900,
+    BlackItalic: 900
+  );
 
   @font-face {
     font-display: swap;
     font-family: $fontName;
-    src: url("/fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff2") format('woff2'),
-    url("/fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff") format('woff');
+    src: url("/fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff2")
+        format("woff2"),
+      url("/fonts/#{$fontName}/#{$fontWeight}/#{$fontName}-#{$fontWeight}.woff")
+        format("woff");
     font-weight: map-get($fontWeightArr, $fontWeight);
     font-style: $fontStyle;
   }
 }
 
 @mixin backgroundImage($image, $size: auto, $posX: center, $posY: center) {
-  background-image: url('../images/#{$image}');
+  background-image: url("/images/#{$image}");
   background-repeat: no-repeat;
   background-position: $posX $posY;
   background-size: $size;
@@ -43,7 +47,7 @@
 
 @mixin hoveredOpacity($opacityStart, $opacityFinish) {
   opacity: $opacityStart;
-  transition: opacity .3s ease;
+  transition: opacity 0.3s ease;
 
   &:hover {
     @media (min-width: $lg-min) {
@@ -53,7 +57,7 @@
 }
 
 @mixin hoveredBackground($bg) {
-  transition: background-color .3s ease;
+  transition: background-color 0.3s ease;
 
   &:hover {
     @media (min-width: $lg-min) {
@@ -63,7 +67,6 @@
 }
 
 @mixin inputAutofill($bg, $color) {
-
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
@@ -94,15 +97,15 @@
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 }
 
 @mixin hoverAfterBottomLine($trigger, $bottom, $bg, $height: 1px) {
-  transition: color .3s ease;
+  transition: color 0.3s ease;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     bottom: $bottom;
@@ -110,15 +113,13 @@
 
     @if $trigger {
       width: 0;
-    }
-
-    @else {
+    } @else {
       width: 100%;
     }
 
     height: $height;
     transform: translateX(-50%);
-    transition: width .3s ease;
+    transition: width 0.3s ease;
   }
 
   @media (min-width: $lg-min) {
@@ -126,9 +127,7 @@
       &:after {
         @if $trigger {
           width: 100%;
-        }
-
-        @else {
+        } @else {
           width: 0;
         }
       }
@@ -143,9 +142,7 @@
 
       @if $way==left {
         left: $start;
-      }
-
-      @else {
+      } @else {
         right: $start;
       }
     }
@@ -157,13 +154,34 @@
     100% {
       @if $way==left {
         left: $finish;
-      }
-
-      @else {
+      } @else {
         right: $finish;
       }
     }
   }
 
   animation: bounceElem $time forwards;
+}
+
+@mixin pulse($startW, $startH, $finishW, $finishH, $time, $media) {
+  @keyframes pulseBg#{$media} {
+    0% {
+      width: $startW;
+      height: $startH;
+    }
+
+    50% {
+      width: $finishW;
+      height: $finishH;
+    }
+
+    100% {
+      width: $startW;
+      height: $startH;
+    }
+  }
+
+  @media (max-width: $media) {
+    animation: pulseBg#{$media} linear $time infinite;
+  }
 }

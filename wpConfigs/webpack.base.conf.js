@@ -101,8 +101,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/image`,
-        to: `${PATHS.build}/image`
+        from: `${PATHS.src}/images`,
+        to: `${PATHS.build}/images`
       },
       {
         from: `${PATHS.src}/static`,
