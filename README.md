@@ -14,7 +14,7 @@ If you use fontsTypography mixin for add font in your project create your folder
 Default type fonts in this mixin: woff and woff2. If you need add other types change fontsTypography mixin.
 
 ```
-webpack-loader check all type fonts in base config
+file-loader check all type fonts in base config
 ```
 
 If you add some image in project use backgroundImage mixin.
