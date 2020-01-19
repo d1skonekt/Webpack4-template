@@ -24,5 +24,5 @@ or: background-image: url("/images/imageName.[ext]");
 ```
 but if you work with wordPress and you want change background image from admin panel you must write this style in html file:
 ```
-<div class="class-name" style="background-image: url('imageName.[ext]');"> 
+<div class="class-name" style="background-image: url('./images/imageName.[ext]');"> 
 ```
