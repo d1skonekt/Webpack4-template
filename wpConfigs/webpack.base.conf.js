@@ -23,7 +23,7 @@ module.exports = {
   },
   output: {
     path: PATHS.build,
-    filename: 'js/[name].js',
+    filename: 'js/[name]-[contenthash].js',
   },
   module: {
     rules: [
@@ -97,7 +97,7 @@ module.exports = {
       filename: './index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: `css/[name].css`
+      filename: `css/[name]-[contenthash].css`
     }),
     new CopyWebpackPlugin([
       {
