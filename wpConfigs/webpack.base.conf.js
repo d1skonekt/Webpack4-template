@@ -3,6 +3,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
+
 
 
 
@@ -36,11 +38,41 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|gif|svg|webp)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
-        }
+        test: /\.(gif|png|jpe?g|svg|webp)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "./images/",
+              useRelativePath: true
+            }
+          },
+          {
+            loader: 'img-loader',
+            options: {
+              plugins: [
+                require('imagemin-gifsicle')({
+                  interlaced: false
+                }),
+                require('imagemin-mozjpeg')({
+                  progressive: true,
+                  arithmetic: false
+                }),
+                require('imagemin-pngquant')({
+                  floyd: 0.5,
+                  speed: 2
+                }),
+                require('imagemin-svgo')({
+                  plugins: [
+                    { removeTitle: true },
+                    { convertPathData: false }
+                  ]
+                })
+              ]
+            }
+          }
+        ]
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -88,7 +120,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      '~': 'src'
+      '~': PATHS.src
     }
   },
   plugins: [
@@ -101,10 +133,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/images`,
-        to: `${PATHS.build}/images`
-      },
-      {
         from: `${PATHS.src}/static`,
         to: ''
       },
@@ -112,7 +140,19 @@ module.exports = {
         from: `${PATHS.src}/fonts`,
         to: `${PATHS.build}/fonts`
       }
-    ])
+    ]),
+    new ImageminWebpWebpackPlugin({
+      config: [{
+        test: /\.(jpe?g|png)/,
+        options: {
+          quality: 75
+        }
+      }],
+      overrideExtension: true,
+      detailedLogs: false,
+      silent: false,
+      strict: true
+    })
   ],
   optimization: {
     minimizer: [

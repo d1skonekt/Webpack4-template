@@ -1,6 +1,12 @@
-import './../scss/main.scss'
+import '~/scss/main.scss';
+import 'webp-in-css/polyfill';
 
-console.log('afasdf');
-let add = (a, b) => a + b;
+const importAll = require =>
+  require.keys().reduce((acc, next) => {
+    acc[next.replace("./", "")] = require(next);
+    return acc;
+  }, {});
 
-console.log(add(2, 3));
+const images = importAll(
+  require.context("~/images", false, /\.(png|jpe?g|svg|webp)$/)
+);
